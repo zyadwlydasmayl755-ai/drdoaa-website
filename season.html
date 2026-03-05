@@ -621,10 +621,7 @@
       });
 
       // ============ Configuration ============
-      const API_URL =
-        window.location.hostname === "localhost"
-          ? ""
-          : "https://drdoaa-api.onrender.com"; // استبدل برابط Render بعد الرفع
+      const API_URL = window.location.hostname === 'localhost' ? '' : 'https://drdoaaapi-rhj0f77p.b4a.run'; // استبدل برابط Render بعد الرفع
 
       const params = new URLSearchParams(window.location.search);
       const season = params.get("season") || "1";
@@ -793,3 +790,4 @@
     </script>
   </body>
 </html>
+
