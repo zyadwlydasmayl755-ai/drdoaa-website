@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="ar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seasons | Dr. Doaa Saif El-Dine</title>
+
+    <!-- Premium Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <style>
+      /* ===== PREMIUM DESIGN SYSTEM ===== */
+
+      :root {
+        --primary-deep-blue: #0a1929;
+        --primary-burgundy: #8b1538;
+        --secondary-gold: #c9a961;
+        --gold-light: #e5d5b0;
+        --cream-pure: #fffdf9;
+        --cream-soft: #faf7f2;
+        --gray-charcoal: #1e2a3a;
+        --gray-warm: #4a4a4a;
+        --shadow-elegant: 0 20px 40px -12px rgba(0, 0, 0, 0.08);
+        --shadow-deep: 0 30px 60px -20px rgba(0, 0, 0, 0.15);
+        --border-subtle: rgba(201, 169, 97, 0.2);
+        --gradient-burgundy: linear-gradient(145deg, #8b1538, #6b1028);
+        --gradient-dark: linear-gradient(145deg, #0a1929, #0e1e2f);
+        --border-radius-card: 24px;
+        --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Montserrat", sans-serif;
+        background: var(--cream-pure);
+        color: var(--gray-warm);
+        line-height: 1.8;
+        font-weight: 300;
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 3rem;
+      }
+
+      section {
+        padding: 5rem 0;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .section-subtitle {
+        display: inline-block;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        color: var(--secondary-gold);
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      h2 {
+        font-size: 3.2rem;
+        color: var(--primary-deep-blue);
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
+      .section-divider {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        margin-top: 1rem;
+      }
+
+      .divider-line {
+        width: 50px;
+        height: 2px;
+        background: var(--secondary-gold);
+      }
+
+      .divider-icon {
+        color: var(--secondary-gold);
+        font-size: 0.8rem;
+      }
+
+      .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--cream-soft);
+        color: var(--primary-deep-blue);
+        padding: 0.8rem 1.8rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 500;
+        border: 1px solid var(--border-subtle);
+        transition: var(--transition-smooth);
+        margin-bottom: 2rem;
+      }
+
+      .back-button:hover {
+        background: var(--secondary-gold);
+        color: white;
+        transform: translateX(-5px);
+      }
+
+      header {
+        background: var(--gradient-dark);
+        color: white;
+        padding: 3rem 2rem;
+        text-align: center;
+      }
+
+      .header-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .academic-badge {
+        display: inline-block;
+        background: rgba(201, 169, 97, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(201, 169, 97, 0.3);
+        padding: 0.5rem 1.8rem;
+        border-radius: 40px;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-weight: 500;
+        margin-bottom: 2rem;
+        color: var(--gold-light);
+      }
+
+      header h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .academic-title {
+        font-size: 1.2rem;
+        font-weight: 300;
+        letter-spacing: 1px;
+        color: var(--gold-light);
+        display: inline-block;
+      }
+
+      .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 2.5rem;
+        margin-top: 3rem;
+      }
+
+      .video-post {
+        background: white;
+        border-radius: var(--border-radius-card);
+        overflow: hidden;
+        box-shadow: var(--shadow-elegant);
+        transition: var(--transition-smooth);
+        border: 1px solid var(--border-subtle);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .video-post:hover {
+        transform: translateY(-12px);
+        box-shadow: var(--shadow-deep);
+      }
+
+      .post-header {
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: linear-gradient(90deg, white, var(--cream-soft));
+      }
+
+      .avatar {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        background: var(--gradient-burgundy);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 1.3rem;
+        box-shadow: 0 6px 15px rgba(139, 21, 56, 0.2);
+      }
+
+      .post-info h4 {
+        font-weight: 600;
+        color: var(--primary-deep-blue);
+        margin-bottom: 0.2rem;
+        font-size: 1.1rem;
+      }
+
+      .post-time {
+        font-size: 0.8rem;
+        color: #888;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      .video-thumbnail {
+        position: relative;
+        background: linear-gradient(135deg, #1e2a3a, #0a1929);
+        height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        overflow: hidden;
+      }
+
+      .video-thumbnail::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6));
+        z-index: 1;
+      }
+
+      .thumbnail-img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.8;
+        transition: transform 0.5s ease;
+      }
+
+      .video-post:hover .thumbnail-img {
+        transform: scale(1.05);
+      }
+
+      .video-number {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: var(--secondary-gold);
+        color: var(--primary-deep-blue);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.2rem;
+        z-index: 3;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .play-button {
+        position: relative;
+        z-index: 3;
+        width: 80px;
+        height: 80px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition-smooth);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .video-thumbnail:hover .play-button {
+        transform: scale(1.15);
+        background: var(--secondary-gold);
+      }
+
+      .play-button i {
+        font-size: 2rem;
+        color: var(--primary-burgundy);
+        margin-left: 5px;
+      }
+
+      .video-thumbnail:hover .play-button i {
+        color: white;
+      }
+
+      .video-duration {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        z-index: 3;
+      }
+
+      .post-content {
+        padding: 1.8rem;
+        font-size: 0.95rem;
+        flex-grow: 1;
+      }
+
+      .post-text {
+        margin-bottom: 1rem;
+        color: var(--gray-warm);
+        line-height: 1.6;
+      }
+
+      .post-text strong {
+        color: var(--primary-deep-blue);
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+      }
+
+      .season-links {
+        margin-top: 1rem;
+      }
+
+      .season-links a {
+        color: #c9a961;
+        margin: 0 12px;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      /* Modal Styles */
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .modal.show {
+        display: block;
+        opacity: 1;
+      }
+
+      .modal-content {
+        position: relative;
+        width: 90%;
+        max-width: 1000px;
+        margin: 2% auto;
+        animation: modalSlideUp 0.4s ease;
+      }
+
+      @keyframes modalSlideUp {
+        from {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .close-modal {
+        position: absolute;
+        right: -40px;
+        top: -40px;
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 300;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--primary-burgundy);
+        border-radius: 50%;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        z-index: 10000;
+      }
+
+      .close-modal:hover {
+        transform: rotate(90deg);
+        background: var(--secondary-gold);
+      }
+
+      .modal-video-container iframe {
+        width: 100%;
+        height: 500px;
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        background: #000;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 5rem;
+        background: var(--cream-soft);
+        border-radius: var(--border-radius-card);
+        border: 2px dashed var(--border-subtle);
+        grid-column: 1/-1;
+      }
+
+      .empty-state i {
+        font-size: 3rem;
+        color: var(--secondary-gold);
+        margin-bottom: 1rem;
+      }
+
+      .empty-state h3 {
+        font-size: 2rem;
+        color: var(--primary-deep-blue);
+        margin-bottom: 0.5rem;
+      }
+
+      footer {
+        background: var(--gradient-dark);
+        color: white;
+        text-align: center;
+        padding: 3rem 2rem;
+        margin-top: 5rem;
+      }
+
+      .loading-spinner {
+        text-align: center;
+        padding: 3rem;
+        grid-column: 1/-1;
+      }
+
+      .loading-spinner i {
+        font-size: 3rem;
+        color: var(--secondary-gold);
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .error-message {
+        text-align: center;
+        padding: 3rem;
+        background: #ffeeee;
+        border-radius: var(--border-radius-card);
+        border: 1px solid #ffcccc;
+        grid-column: 1/-1;
+        color: #cc0000;
+      }
+      /* Responsive Design */
+
+      @media (max-width: 1024px) {
+        .container {
+          padding: 0 2rem;
+        }
+        h2 {
+          font-size: 2.8rem;
+        }
+        .video-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 1.5rem;
+        }
+        h2 {
+          font-size: 2.2rem;
+        }
+        .video-grid {
+          grid-template-columns: 1fr;
+        }
+        .close-modal {
+          right: 0;
+          top: -50px;
+        }
+        header h1 {
+          font-size: 2.5rem;
+        }
+        .academic-badge {
+          font-size: 0.7rem;
+          padding: 0.4rem 1.2rem;
+        }
+        .modal-video-container iframe {
+          height: 300px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .container {
+          padding: 0 1rem;
+        }
+        .post-header {
+          padding: 1rem;
+        }
+        .avatar {
+          width: 45px;
+          height: 45px;
+          font-size: 1.1rem;
+        }
+        .post-content {
+          padding: 1.2rem;
+        }
+        .modal-video-container iframe {
+          height: 250px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Modal for Video Playback -->
+    <div id="videoModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <div id="modalVideoContainer" class="modal-video-container"></div>
+      </div>
+    </div>
+
+    <header>
+      <div class="header-content" data-aos="fade-up">
+        <span class="academic-badge" id="seasonBadge"
+          >Academic Video Library</span
+        >
+        <h1 id="seasonTitle">Season</h1>
+        <div class="academic-title" id="seasonSubtitle">Loading...</div>
+      </div>
+    </header>
+
+    <div class="container" style="margin-top: 2rem">
+      <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back to Main Page
+      </a>
+    </div>
+
+    <section id="videos">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up">
+          <span class="section-subtitle" id="seasonSubtitle2">Season</span>
+          <h2 id="seasonHeading">Course Videos</h2>
+          <div class="section-divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon"><i class="fas fa-video"></i></span>
+            <span class="divider-line"></span>
+          </div>
+        </div>
+
+        <div class="video-grid" id="videosContainer">
+          <div class="loading-spinner">
+            <i class="fas fa-spinner"></i>
+            <p>Loading videos...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2026 Dr. Doaa Saif El-Dine. All rights reserved.</p>
+      <p style="margin-top: 0.5rem; opacity: 0.7">
+        Faculty of AL-Alsun, Ain Shams University
+      </p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      // Initialize AOS
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100,
+        easing: "ease-out-cubic",
+      });
+
+      // ============ Configuration ============
+      const API_URL =
+        window.location.hostname === "localhost"
+          ? ""
+          : "https://drdoaa-api.onrender.com"; // استبدل برابط Render بعد الرفع
+
+      const params = new URLSearchParams(window.location.search);
+      const season = params.get("season") || "1";
+
+      async function loadSeason() {
+        try {
+          // عرض حالة التحميل
+          document.getElementById("videosContainer").innerHTML = `
+                  <div class="loading-spinner">
+                      <i class="fas fa-spinner"></i>
+                      <p>Loading videos...</p>
+                  </div>
+              `;
+
+          // جلب بيانات الموسم
+          const seasonResponse = await fetch(
+            `${API_URL}/api/seasons/${season}`,
+          );
+
+          if (!seasonResponse.ok) {
+            throw new Error("Failed to load season data");
+          }
+
+          const seasonData = await seasonResponse.json();
+
+          document.getElementById("seasonTitle").textContent =
+            seasonData.title || `Season ${season}`;
+          document.getElementById("seasonSubtitle").textContent =
+            seasonData.subtitle || "Academic Video Library";
+          document.getElementById("seasonBadge").textContent =
+            seasonData.badge || `Season ${season}`;
+          document.getElementById("seasonSubtitle2").textContent =
+            seasonData.badge || `Season ${season}`;
+          document.getElementById("seasonHeading").textContent =
+            seasonData.title ? `${seasonData.title} Videos` : "Course Videos";
+
+          // جلب فيديوهات الموسم
+          const videosResponse = await fetch(
+            `${API_URL}/api/seasons/${season}/videos`,
+          );
+
+          if (!videosResponse.ok) {
+            throw new Error("Failed to load videos");
+          }
+
+          const videos = await videosResponse.json();
+
+          const container = document.getElementById("videosContainer");
+
+          if (videos.length === 0) {
+            container.innerHTML = `
+                      <div class="empty-state">
+                          <i class="fas fa-video-slash"></i>
+                          <h3>Coming Soon...</h3>
+                          <p>Videos for this season are being prepared. Please check back soon.</p>
+                      </div>
+                  `;
+          } else {
+            container.innerHTML = ""; // مسح محتوى التحميل
+
+            videos.forEach((video) => {
+              // التأكد من استخدام youtubeId بحرف I كبير
+              const videoNumber = video.number || "?";
+              const videoTitle = video.title || "Untitled";
+              const videoYoutubeId = video.youtubeId || "";
+              const videoDuration = video.duration || "00:00";
+              const videoDescription =
+                video.description ||
+                "تحليل علمي مفصل حول موضوع الحلقة مع عرض الأدلة والمصادر التاريخية.";
+
+              const card = document.createElement("div");
+              card.className = "video-post";
+              card.setAttribute("data-aos", "fade-up");
+
+              card.innerHTML = `
+                          <div class="post-header">
+                              <div class="avatar">د</div>
+                              <div class="post-info">
+                                  <h4>Dr. Doaa Saif El-Dine</h4>
+                              </div>
+                          </div>
+                          <div class="video-thumbnail" onclick="playVideo('${videoYoutubeId}')">
+                              <img src="https://img.youtube.com/vi/${videoYoutubeId}/hqdefault.jpg" class="thumbnail-img" alt="${videoTitle}">
+                              <div class="video-number">${videoNumber}</div>
+                              <div class="play-button"><i class="fas fa-play"></i></div>
+                              <div class="video-duration">${videoDuration}</div>
+                          </div>
+                          <div class="post-content">
+                              <div class="post-text">
+                                  <strong>${videoNumber}. ${videoTitle}</strong>
+                                  ${videoDescription}
+                              </div>
+                          </div>
+                      `;
+
+              container.appendChild(card);
+            });
+          }
+        } catch (error) {
+          console.error("Error loading season:", error);
+
+          // عرض رسالة خطأ
+          document.getElementById("videosContainer").innerHTML = `
+                  <div class="error-message">
+                      <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                      <h3>Error Loading Videos</h3>
+                      <p>Could not load videos. Please make sure the server is running.</p>
+                      <p style="font-size: 0.9rem; margin-top: 1rem;">${error.message}</p>
+                  </div>
+              `;
+
+          // تعيين عناوين افتراضية
+          document.getElementById("seasonTitle").textContent =
+            `Season ${season}`;
+          document.getElementById("seasonSubtitle").textContent =
+            "Academic Video Library";
+          document.getElementById("seasonBadge").textContent =
+            `Season ${season}`;
+          document.getElementById("seasonSubtitle2").textContent =
+            `Season ${season}`;
+          document.getElementById("seasonHeading").textContent =
+            "Course Videos";
+        }
+      }
+
+      // تشغيل الفيديو في المودال
+      function playVideo(id) {
+        if (!id) {
+          alert("Video ID is missing");
+          return;
+        }
+
+        document.getElementById("modalVideoContainer").innerHTML = `
+              <iframe 
+                  width="100%" 
+                  height="500"
+                  src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                  style="border-radius:16px;">
+              </iframe>
+          `;
+        document.getElementById("videoModal").classList.add("show");
+        document.body.style.overflow = "hidden";
+      }
+
+      // إغلاق المودال
+      function closeModal() {
+        document.getElementById("videoModal").classList.remove("show");
+        document.body.style.overflow = "";
+        setTimeout(() => {
+          document.getElementById("modalVideoContainer").innerHTML = "";
+        }, 300);
+      }
+
+      // إغلاق المودال عند النقر خارج المحتوى
+      window.onclick = function (e) {
+        const modal = document.getElementById("videoModal");
+        if (e.target === modal) {
+          closeModal();
+        }
+      };
+
+      // تحميل الموسم عند تحميل الصفحة
+      loadSeason();
+    </script>
+  </body>
+</html>
