@@ -621,7 +621,7 @@
       });
 
       // ============ Configuration ============
-      const API_URL = window.location.hostname === 'localhost' ? '' : 'https://your-app-url.com'; // استبدل برابط Render بعد الرفع
+      const API_URL = window.location.hostname === 'localhost' ? '' : window.location.origin; // استبدل برابط Render بعد الرفع
 
       const params = new URLSearchParams(window.location.search);
       const season = params.get("season") || "1";
@@ -790,5 +790,6 @@
     </script>
   </body>
 </html>
+
 
 
