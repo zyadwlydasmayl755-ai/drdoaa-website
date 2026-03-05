@@ -140,33 +140,9 @@ app.post("/api/check-password", (req, res) => {
     : res.status(401).json({ success: false, error: "Wrong password" });
 });
 
-// ============ Initialize Database ============
-async function initDatabase() {
-  try {
-    const seasonsCount = await Season.countDocuments();
-    if (seasonsCount === 0) {
-      await Season.insertMany([
-        { seasonId: 1, title: "Season 1", subtitle: "Introduction to Israeli Science", badge: "Season 1" },
-        { seasonId: 2, title: "Season 2", subtitle: "Modern Israeli", badge: "Season 2" },
-        { seasonId: 3, title: "Season 3", subtitle: "Coming Soon...", badge: "Season 3" },
-      ]);
-
-      const season1Videos = [ /* ... (بيانات فيديوهات الموسم الأول كاملة) ... */ ];
-      const season2Videos = [ /* ... (بيانات فيديوهات الموسم الثاني كاملة) ... */ ];
-      
-      await Video.insertMany(season1Videos);
-      await Video.insertMany(season2Videos);
-      console.log("✅ Database initialized with seasons and videos");
-    }
-  } catch (error) {
-    console.error("❌ Error initializing database:", error);
-  }
-}
-
 // Start server
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📊 API available at http://localhost:${PORT}/api`);
-  console.log(`🔐 Admin panel: http://localhost:${PORT}/admin.html`);
-  initDatabase();
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📊 API available at /api`);
+  console.log(`🔐 Admin panel: /admin.html`);
 });
