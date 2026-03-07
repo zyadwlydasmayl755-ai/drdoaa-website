@@ -889,13 +889,7 @@
 
         // ============ Configuration ============
         // تحديد رابط API بناءً على بيئة التشغيل
-        const API_URL = (() => {
-            if (window.location.hostname === 'localhost') {
-                return '';
-            }
-            // استخدم الرابط الثابت للمنصة المستهدفة
-            return 'https://drdoaaapi-rhj0f77p.b4a.run';
-        })();
+        const API_URL = window.location.hostname === 'localhost' ? '' : window.location.origin;
 
         console.log('🔧 Admin Dashboard initialized');
         console.log('📍 API URL:', API_URL || 'same origin');
