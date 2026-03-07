@@ -10,7 +10,6 @@ const PORT = process.env.PORT || 3000;
 // ============ CORS Configuration ============
 const corsOptions = {
   origin: [
-    'https://drdoaaapi-8yfn3pk3.b4a.run',
     'https://drdoaa-website.pxxl.click',
     'http://localhost:3000'
   ],
