@@ -9,7 +9,11 @@ const PORT = process.env.PORT || 3000;
 
 // ============ CORS Configuration (Pxxl Only) ============
 const corsOptions = {
-  origin: 'https://drdoaa-website.pxxl.click',
+  origin: [
+    'https://drdoaa-website.pxxl.click',
+    'https://drdoaaapi-rhj0f77p.b4a.run',
+    'http://localhost:3000'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
