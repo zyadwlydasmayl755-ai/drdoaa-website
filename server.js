@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 
 const app = express();
@@ -21,6 +22,18 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
+
+// ============ Rate Limiting for Security ============
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 attempts
+  message: { 
+    success: false, 
+    error: "Too many login attempts. Please try again after 15 minutes." 
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // ============ Middleware ============
 app.use(bodyParser.json());
@@ -319,10 +332,10 @@ app.get("/api/stats", async (req, res) => {
   }
 });
 
-// ============ Authentication ============
+// ============ Authentication with Rate Limiting ============
 
-// POST check password
-app.post("/api/check-password", (req, res) => {
+// POST check password - Protected by rate limiter
+app.post("/api/check-password", loginLimiter, (req, res) => {
   const { password } = req.body;
   const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
   
@@ -366,4 +379,5 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`📊 API base URL: /api`);
   console.log(`🔐 Admin: /admin.html`);
   console.log(`🌍 CORS enabled for: ${corsOptions.origin.join(', ')}`);
+  console.log(`🔒 Login rate limit: 5 attempts per 15 minutes`);
 });
