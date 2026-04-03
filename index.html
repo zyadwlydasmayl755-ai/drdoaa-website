@@ -113,6 +113,49 @@
         margin: 0 auto;
       }
 
+      /* Profile Image Style */
+      .profile-image {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 2rem;
+        border: 4px solid var(--secondary-gold);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: var(--transition-smooth);
+      }
+
+      .profile-image:hover {
+        transform: scale(1.02);
+        border-color: var(--primary-burgundy);
+      }
+
+      .signature-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        border: 2px solid var(--secondary-gold);
+        transition: var(--transition-smooth);
+      }
+
+      .footer-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 1rem auto;
+        border: 3px solid var(--secondary-gold);
+        display: block;
+        transition: var(--transition-smooth);
+      }
+
+      .footer-image:hover {
+        transform: scale(1.05);
+        border-color: var(--primary-burgundy);
+      }
+
       .academic-badge {
         display: inline-block;
         background: rgba(201, 169, 97, 0.15);
@@ -328,6 +371,8 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
+        flex-wrap: wrap;
+        gap: 1rem;
       }
 
       .statement-header h3 {
@@ -366,6 +411,14 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+
+      .signature-left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
       }
 
       .signature-name {
@@ -387,6 +440,16 @@
         font-size: 2.5rem;
         color: var(--secondary-gold);
         opacity: 0.5;
+      }
+
+      @media (max-width: 768px) {
+        .statement-header h3 {
+          max-width: 100%;
+        }
+        .signature {
+          flex-direction: column;
+          align-items: flex-start;
+        }
       }
       /* ===== PREMIUM SOCIAL SECTION ===== */
 
@@ -725,6 +788,10 @@
         z-index: 2;
       }
 
+      .footer-brand {
+        text-align: center;
+      }
+
       .footer-brand h3 {
         font-size: 2rem;
         margin-bottom: 0.5rem;
@@ -785,7 +852,6 @@
         }
       }
       /* ===== RESPONSIVE DESIGN ===== */
-      /*  الأجهزة اللوحية الصغيرة والهواتف الكبيرة (max-width: 1024px) */
 
       @media (max-width: 1024px) {
         .container {
@@ -810,7 +876,6 @@
           gap: 3rem;
         }
       }
-      /*  الأجهزة اللوحية (iPad - max-width: 768px) */
 
       @media (max-width: 768px) {
         .container {
@@ -846,7 +911,6 @@
         .statement-header {
           flex-direction: column;
           align-items: flex-start;
-          gap: 1rem;
         }
         .statement-header h3 {
           max-width: 100%;
@@ -858,7 +922,6 @@
         .signature {
           flex-direction: column;
           align-items: flex-start;
-          gap: 1.5rem;
         }
         .social-profiles {
           grid-template-columns: repeat(2, 1fr);
@@ -893,7 +956,6 @@
           align-items: center;
         }
       }
-      /*  الهواتف الصغيرة (max-width: 576px) */
 
       @media (max-width: 576px) {
         .container {
@@ -948,6 +1010,10 @@
         .signature-name {
           font-size: 1.8rem;
         }
+        .profile-image {
+          width: 120px;
+          height: 120px;
+        }
         .social-profiles {
           grid-template-columns: 1fr;
           gap: 1.2rem;
@@ -971,15 +1037,6 @@
         .share-btn {
           width: 100%;
           padding: 0.8rem 1.5rem;
-        }
-        .season-card .season-header span {
-          font-size: 4rem !important;
-        }
-        .season-card div[style*="padding: 2rem"] {
-          padding: 1.5rem !important;
-        }
-        .season-card h3 {
-          font-size: 1.6rem !important;
         }
         .post-header {
           padding: 1.2rem;
@@ -1011,7 +1068,6 @@
           font-size: 0.8rem;
         }
       }
-      /*  الهواتف الصغيرة جداً (max-width: 375px) */
 
       @media (max-width: 375px) {
         h2 {
@@ -1036,11 +1092,7 @@
           font-size: 0.85rem;
           padding: 0.7rem 1rem;
         }
-        .season-card h3 {
-          font-size: 1.4rem !important;
-        }
       }
-      /* Loading and Error States */
 
       .loading-spinner {
         text-align: center;
@@ -1079,6 +1131,13 @@
     <!-- PREMIUM HEADER -->
     <header>
       <div class="header-content" data-aos="fade-up">
+        <!-- صورة الدكتورة في الهيدر -->
+        <img 
+          src="drdoaa.jpeg" 
+          alt="Dr. Doaa Saif El-Dine" 
+          class="profile-image"
+          onerror="this.style.display='none'"
+        />
         <span class="academic-badge">University Professor & Scholar</span>
         <h1>Dr. Doaa Saif El-Dine</h1>
         <div class="academic-title">
@@ -1174,7 +1233,14 @@
           </div>
 
           <div class="signature">
-            <div>
+            <div class="signature-left">
+              <!-- صورة الدكتورة في التوقيع -->
+              <img 
+                src="drdoaa.jpeg" 
+                alt="Dr. Doaa Saif El-Dine" 
+                class="signature-image"
+                onerror="this.style.display='none'"
+              />
               <div class="signature-name">Dr. Doaa Saif El-Dine</div>
               <div class="signature-title">
                 Professor of Hebrew • Ain Shams University
@@ -1318,9 +1384,16 @@
     <footer>
       <div class="footer-content">
         <div class="footer-brand">
+          <!-- صورة الدكتورة في الفوتر -->
+          <img 
+            src="drdoaa.jpeg" 
+            alt="Dr. Doaa Saif El-Dine" 
+            class="footer-image"
+            onerror="this.style.display='none'"
+          />
           <h3>Dr. Doaa Saif El-Dine</h3>
           <p>Professor of Hebrew<br />Ain Shams University, Cairo</p>
-          <div style="display: flex; gap: 1rem; margin-top: 1.5rem">
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center;">
             <a
               href="https://www.facebook.com/share/184NdgSZiM/"
               style="color: white; font-size: 1.2rem"
@@ -1353,7 +1426,6 @@
             <li><a href="#statement">Official Statement</a></li>
             <li><a href="#social-media">Academic Connect</a></li>
             <li><a href="#videos">Lectures</a></li>
-            
           </ul>
         </div>
 
@@ -1389,7 +1461,7 @@
       });
 
       // ============ Configuration ============
-      const API_URL = window.location.hostname === 'localhost' ? '' : window.location.origin; // استبدل برابط Render بعد الرفع
+      const API_URL = window.location.hostname === 'localhost' ? '' : window.location.origin;
 
       // ============ Load Seasons from API ============
       async function loadSeasons() {
