@@ -113,13 +113,26 @@
         border-color: var(--primary-burgundy);
       }
 
+      /* Arabic Title Styles */
       .arabic-title {
         font-family: "Cormorant Garamond", serif;
-        font-size: 1.2rem;
-        font-weight: 500;
-        color: var(--gold-light);
-        margin-top: 0.5rem;
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 1rem;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
         direction: rtl;
+        letter-spacing: -0.02em;
+      }
+
+      .arabic-subtitle {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.3rem;
+        font-weight: 400;
+        color: var(--gold-light);
+        margin-bottom: 2rem;
+        direction: rtl;
+        letter-spacing: 1px;
       }
 
       .academic-badge {
@@ -135,36 +148,6 @@
         font-weight: 500;
         margin-bottom: 2rem;
         color: var(--gold-light);
-      }
-
-      header h1 {
-        font-size: 4.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        line-height: 1.1;
-        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
-        animation: fadeInUp 1s ease;
-      }
-
-      .academic-title {
-        font-size: 1.4rem;
-        font-weight: 300;
-        letter-spacing: 1px;
-        color: var(--gold-light);
-        margin-bottom: 1rem;
-        position: relative;
-        display: inline-block;
-      }
-
-      .academic-title::after {
-        content: "";
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60px;
-        height: 2px;
-        background: var(--secondary-gold);
       }
 
       .header-stats {
@@ -774,6 +757,7 @@
       }
 
       .footer-brand .arabic-title {
+        font-size: 1.2rem;
         color: var(--gold-light);
         margin-bottom: 1rem;
       }
@@ -840,8 +824,8 @@
         h2 {
           font-size: 3rem;
         }
-        header h1 {
-          font-size: 4rem;
+        .arabic-title {
+          font-size: 2.5rem;
         }
         .social-profiles {
           grid-template-columns: repeat(2, 1fr);
@@ -870,11 +854,11 @@
         header {
           padding: 4rem 1.5rem;
         }
-        header h1 {
-          font-size: 3.2rem;
+        .arabic-title {
+          font-size: 2rem;
         }
-        .academic-title {
-          font-size: 1.2rem;
+        .arabic-subtitle {
+          font-size: 1rem;
         }
         .header-stats {
           flex-wrap: wrap;
@@ -947,8 +931,8 @@
         header {
           padding: 3rem 1rem;
         }
-        header h1 {
-          font-size: 2.8rem;
+        .arabic-title {
+          font-size: 1.5rem;
         }
         .academic-badge {
           font-size: 0.75rem;
@@ -1053,11 +1037,8 @@
         h2 {
           font-size: 2rem;
         }
-        header h1 {
-          font-size: 2.2rem;
-        }
-        .academic-title {
-          font-size: 1rem;
+        .arabic-title {
+          font-size: 1.2rem;
         }
         .stat-number {
           font-size: 1.8rem;
@@ -1119,11 +1100,8 @@
           onerror="this.style.display='none'"
         />
         <span class="academic-badge">University Professor & Scholar</span>
-        <h1>Dr. Doaa Saif El-Dine</h1>
-        <div class="academic-title">
-          Professor of Hebrew • Ain Shams University
-        </div>
-        <div class="arabic-title">أ. م. د/دعاء محمد سيف الدين طه</div>
+        <h1 class="arabic-title">أ. م. د/دعاء محمد سيف الدين طه</h1>
+        <div class="arabic-subtitle">أستاذ العبرية • جامعة عين شمس</div>
         <div class="header-stats">
           <div class="stat-item">
             <span class="stat-number">15+</span>
