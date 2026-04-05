@@ -69,49 +69,6 @@
         font-weight: 600;
         letter-spacing: -0.02em;
       }
-      /* ===== PREMIUM HEADER ===== */
-
-      header {
-        background: var(--gradient-dark);
-        color: white;
-        padding: 6rem 2rem;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-        isolation: isolate;
-      }
-
-      header::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M30 0 L60 30 L30 60 L0 30 Z" fill="rgba(201,169,97,0.03)"/></svg>');
-        background-size: 60px 60px;
-        opacity: 0.4;
-        z-index: 1;
-      }
-
-      header::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(
-          circle at 70% 20%,
-          rgba(201, 169, 97, 0.15),
-          transparent 70%
-        );
-        z-index: 2;
-      }
-
-      .header-content {
-        position: relative;
-        z-index: 10;
-        max-width: 900px;
-        margin: 0 auto;
-      }
 
       /* Profile Image Style */
       .profile-image {
@@ -154,6 +111,15 @@
       .footer-image:hover {
         transform: scale(1.05);
         border-color: var(--primary-burgundy);
+      }
+
+      .arabic-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--gold-light);
+        margin-top: 0.5rem;
+        direction: rtl;
       }
 
       .academic-badge {
@@ -427,6 +393,15 @@
         font-weight: 600;
         color: var(--primary-deep-blue);
         line-height: 1.2;
+      }
+
+      .signature-name-arabic {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: var(--primary-burgundy);
+        direction: rtl;
+        margin-top: 0.5rem;
       }
 
       .signature-title {
@@ -798,6 +773,11 @@
         color: white;
       }
 
+      .footer-brand .arabic-title {
+        color: var(--gold-light);
+        margin-bottom: 1rem;
+      }
+
       .footer-brand p {
         opacity: 0.8;
         margin-bottom: 1.5rem;
@@ -1143,6 +1123,7 @@
         <div class="academic-title">
           Professor of Hebrew • Ain Shams University
         </div>
+        <div class="arabic-title">أ. م. د/دعاء محمد سيف الدين طه</div>
         <div class="header-stats">
           <div class="stat-item">
             <span class="stat-number">15+</span>
@@ -1242,6 +1223,7 @@
                 onerror="this.style.display='none'"
               />
               <div class="signature-name">Dr. Doaa Saif El-Dine</div>
+              <div class="signature-name-arabic">أ. م. د/دعاء محمد سيف الدين طه</div>
               <div class="signature-title">
                 Professor of Hebrew • Ain Shams University
               </div>
@@ -1302,7 +1284,7 @@
               <small>Lectures & Talks</small>
             </a>
             <a
-              href="mailto:d_mohamed@alsun.asu.edu.eg"
+              href="mailto:doaas2010@yahoo.com"
               class="social-link"
               data-aos="zoom-in"
               data-aos-delay="400"
@@ -1392,6 +1374,7 @@
             onerror="this.style.display='none'"
           />
           <h3>Dr. Doaa Saif El-Dine</h3>
+          <div class="arabic-title">أ. م. د/دعاء محمد سيف الدين طه</div>
           <p>Professor of Hebrew<br />Ain Shams University, Cairo</p>
           <div style="display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center;">
             <a
@@ -1407,7 +1390,7 @@
               ><i class="fab fa-youtube"></i
             ></a>
             <a
-              href="mailto:d_mohamed@alsun.asu.edu.eg"
+              href="mailto:doaas2010@yahoo.com"
               style="color: white; font-size: 1.2rem"
               ><i class="fas fa-envelope"></i
             ></a>
@@ -1435,7 +1418,7 @@
             <li><a href="#">Department of Hebrew</a></li>
             <li><a href="#">Ain Shams University</a></li>
             <li><a href="#">Cairo, Egypt</a></li>
-            <li><a href="mailto:d_mohamed@alsun.asu.edu.eg">Email</a></li>
+            <li><a href="mailto:doaas2010@yahoo.com">Email</a></li>
           </ul>
         </div>
 
