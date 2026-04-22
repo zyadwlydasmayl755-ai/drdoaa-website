@@ -1877,6 +1877,13 @@
         });
       }
 
+      // ============ Track Page Visit (NEW) ============
+      fetch('/api/visit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path: window.location.pathname })
+      }).catch(err => console.error('Visit tracking failed:', err));
+
       document.addEventListener("DOMContentLoaded", loadSeasons);
     </script>
   </body>
