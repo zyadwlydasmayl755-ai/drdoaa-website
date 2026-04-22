@@ -25,8 +25,8 @@ app.options('*', cors(corsOptions));
 
 // ============ Rate Limiting for Security ============
 const loginLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // 5 attempts
+  windowMs: 15 * 60 * 1000,
+  max: 5,
   message: { 
     success: false, 
     error: "Too many login attempts. Please try again after 15 minutes." 
@@ -43,39 +43,6 @@ app.use(express.static(__dirname));
 // Request logging middleware
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-  next();
-});
-
-// ============ Visitor Tracking Middleware (NEW) ============
-// This middleware saves every page visit to the database
-app.use(async (req, res, next) => {
-  // Skip tracking for static assets (images, css, js, etc.)
-  if (req.path.includes('.') && !req.path.includes('.html')) {
-    return next();
-  }
-  
-  // Skip tracking for API calls
-  if (req.path.startsWith('/api/')) {
-    return next();
-  }
-  
-  try {
-    const visit = new Visit({
-      ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
-      path: req.path,
-      userAgent: req.headers['user-agent']
-    });
-    await visit.save();
-    
-    // Keep only last 500 visits to prevent database bloat
-    const count = await Visit.countDocuments();
-    if (count > 500) {
-      const oldest = await Visit.findOne().sort({ timestamp: 1 });
-      if (oldest) await oldest.deleteOne();
-    }
-  } catch (err) {
-    console.error("❌ Failed to save visit:", err);
-  }
   next();
 });
 
@@ -96,7 +63,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(() => console.log("✅ Connected to MongoDB Atlas"))
 .catch(err => console.error("❌ MongoDB connection error:", err.message));
 
-// MongoDB connection events
 mongoose.connection.on('connected', () => console.log('✅ Mongoose connected'));
 mongoose.connection.on('error', (err) => console.error('❌ Mongoose error:', err));
 mongoose.connection.on('disconnected', () => console.log('🔌 Mongoose disconnected'));
@@ -109,20 +75,15 @@ const videoSchema = new mongoose.Schema({
   youtubeId: { type: String, required: true },
   duration: { type: String, required: true },
   description: { type: String, default: '' },
-}, { 
-  timestamps: true 
-});
+}, { timestamps: true });
 
 const seasonSchema = new mongoose.Schema({
   seasonId: { type: Number, unique: true, required: true },
   title: { type: String, required: true },
   subtitle: { type: String, default: '' },
   badge: { type: String, default: '' },
-}, { 
-  timestamps: true 
-});
+}, { timestamps: true });
 
-// ============ Visitor Analytics Schema (NEW) ============
 const visitSchema = new mongoose.Schema({
   ip: { type: String },
   path: { type: String, required: true },
@@ -136,7 +97,6 @@ const Visit = mongoose.model("Visit", visitSchema);
 
 // ============ API Routes - Seasons ============
 
-// GET all seasons
 app.get("/api/seasons", async (req, res) => {
   try {
     const seasons = await Season.find().sort({ seasonId: 1 });
@@ -147,16 +107,11 @@ app.get("/api/seasons", async (req, res) => {
   }
 });
 
-// GET specific season
 app.get("/api/seasons/:seasonId", async (req, res) => {
   try {
     const seasonId = parseInt(req.params.seasonId);
     const season = await Season.findOne({ seasonId });
-    
-    if (!season) {
-      return res.status(404).json({ error: "Season not found" });
-    }
-    
+    if (!season) return res.status(404).json({ error: "Season not found" });
     res.json(season);
   } catch (error) {
     console.error('❌ Error fetching season:', error);
@@ -164,25 +119,18 @@ app.get("/api/seasons/:seasonId", async (req, res) => {
   }
 });
 
-// POST new season
 app.post("/api/seasons", async (req, res) => {
   try {
     const { title, subtitle, badge } = req.body;
-    
-    if (!title) {
-      return res.status(400).json({ error: "Season title is required" });
-    }
-    
+    if (!title) return res.status(400).json({ error: "Season title is required" });
     const lastSeason = await Season.findOne().sort({ seasonId: -1 });
     const newSeasonId = lastSeason ? lastSeason.seasonId + 1 : 4;
-    
     const newSeason = new Season({
       seasonId: newSeasonId,
       title: title,
       subtitle: subtitle || `Season ${newSeasonId}`,
       badge: badge || `Season ${newSeasonId}`
     });
-    
     await newSeason.save();
     console.log(`✅ Season created: ${newSeason.title} (ID: ${newSeason.seasonId})`);
     res.status(201).json(newSeason);
@@ -192,20 +140,14 @@ app.post("/api/seasons", async (req, res) => {
   }
 });
 
-// PUT update season
 app.put("/api/seasons/:seasonId", async (req, res) => {
   try {
     const seasonId = parseInt(req.params.seasonId);
     const season = await Season.findOne({ seasonId });
-    
-    if (!season) {
-      return res.status(404).json({ error: "Season not found" });
-    }
-    
+    if (!season) return res.status(404).json({ error: "Season not found" });
     if (req.body.title) season.title = req.body.title;
     if (req.body.subtitle !== undefined) season.subtitle = req.body.subtitle;
     if (req.body.badge !== undefined) season.badge = req.body.badge;
-    
     await season.save();
     console.log(`✅ Season updated: ${season.title} (ID: ${season.seasonId})`);
     res.json(season);
@@ -215,27 +157,14 @@ app.put("/api/seasons/:seasonId", async (req, res) => {
   }
 });
 
-// DELETE season
 app.delete("/api/seasons/:seasonId", async (req, res) => {
   try {
     const seasonId = parseInt(req.params.seasonId);
-    
-    if (seasonId <= 3) {
-      return res.status(403).json({ error: "Cannot delete default seasons (1, 2, 3)" });
-    }
-    
+    if (seasonId <= 3) return res.status(403).json({ error: "Cannot delete default seasons (1, 2, 3)" });
     const videosCount = await Video.countDocuments({ seasonId });
-    if (videosCount > 0) {
-      return res.status(400).json({ 
-        error: "Cannot delete season with videos. Delete all videos in this season first." 
-      });
-    }
-    
+    if (videosCount > 0) return res.status(400).json({ error: "Cannot delete season with videos. Delete all videos in this season first." });
     const result = await Season.deleteOne({ seasonId });
-    if (result.deletedCount === 0) {
-      return res.status(404).json({ error: "Season not found" });
-    }
-    
+    if (result.deletedCount === 0) return res.status(404).json({ error: "Season not found" });
     console.log(`✅ Season deleted: ID ${seasonId}`);
     res.json({ message: "Season deleted successfully" });
   } catch (error) {
@@ -246,7 +175,6 @@ app.delete("/api/seasons/:seasonId", async (req, res) => {
 
 // ============ API Routes - Videos ============
 
-// GET videos by season
 app.get("/api/seasons/:seasonId/videos", async (req, res) => {
   try {
     const seasonId = parseInt(req.params.seasonId);
@@ -258,31 +186,17 @@ app.get("/api/seasons/:seasonId/videos", async (req, res) => {
   }
 });
 
-// POST new video
 app.post("/api/videos", async (req, res) => {
   try {
     const { seasonId, number, title, youtubeId, duration, description } = req.body;
-    
     if (!seasonId || !number || !title || !youtubeId || !duration) {
       return res.status(400).json({ error: "Missing required fields" });
     }
-    
     const existingVideo = await Video.findOne({ seasonId, number });
     if (existingVideo) {
-      return res.status(400).json({ 
-        error: `Video number ${number} already exists in season ${seasonId}` 
-      });
+      return res.status(400).json({ error: `Video number ${number} already exists in season ${seasonId}` });
     }
-    
-    const video = new Video({
-      seasonId,
-      number,
-      title,
-      youtubeId,
-      duration,
-      description: description || ''
-    });
-    
+    const video = new Video({ seasonId, number, title, youtubeId, duration, description: description || '' });
     await video.save();
     console.log(`✅ Video created: ${video.title} (Season ${seasonId}, #${number})`);
     res.status(201).json(video);
@@ -292,21 +206,15 @@ app.post("/api/videos", async (req, res) => {
   }
 });
 
-// PUT update video
 app.put("/api/videos/:id", async (req, res) => {
   try {
     const video = await Video.findById(req.params.id);
-    
-    if (!video) {
-      return res.status(404).json({ error: "Video not found" });
-    }
-    
+    if (!video) return res.status(404).json({ error: "Video not found" });
     if (req.body.number) video.number = req.body.number;
     if (req.body.title) video.title = req.body.title;
     if (req.body.youtubeId) video.youtubeId = req.body.youtubeId;
     if (req.body.duration) video.duration = req.body.duration;
     if (req.body.description !== undefined) video.description = req.body.description;
-    
     await video.save();
     console.log(`✅ Video updated: ${video.title}`);
     res.json(video);
@@ -316,15 +224,10 @@ app.put("/api/videos/:id", async (req, res) => {
   }
 });
 
-// DELETE video
 app.delete("/api/videos/:id", async (req, res) => {
   try {
     const video = await Video.findByIdAndDelete(req.params.id);
-    
-    if (!video) {
-      return res.status(404).json({ error: "Video not found" });
-    }
-    
+    if (!video) return res.status(404).json({ error: "Video not found" });
     console.log(`✅ Video deleted: ${video.title}`);
     res.json({ message: "Video deleted successfully" });
   } catch (error) {
@@ -335,15 +238,12 @@ app.delete("/api/videos/:id", async (req, res) => {
 
 // ============ API Routes - Stats ============
 
-// GET stats
 app.get("/api/stats", async (req, res) => {
   try {
     const totalVideos = await Video.countDocuments();
     const totalSeasons = await Season.countDocuments();
-    
     const videos = await Video.find();
     let totalMinutes = 0;
-    
     videos.forEach(v => {
       if (v.duration) {
         const parts = v.duration.split(":");
@@ -352,21 +252,17 @@ app.get("/api/stats", async (req, res) => {
         }
       }
     });
-    
     const totalHours = (totalMinutes / 60).toFixed(1);
-    
-    res.json({ 
-      totalVideos, 
-      totalSeasons, 
-      totalHours: totalHours + "h" 
-    });
+    res.json({ totalVideos, totalSeasons, totalHours: totalHours + "h" });
   } catch (error) {
     console.error('❌ Error fetching stats:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
-// ============ GET Visitors Statistics (NEW) ============
+// ============ API Routes - Visitors ============
+
+// GET visitors statistics
 app.get("/api/stats/visits", async (req, res) => {
   try {
     const totalVisits = await Visit.countDocuments();
@@ -378,12 +274,36 @@ app.get("/api/stats/visits", async (req, res) => {
   }
 });
 
-// ============ Authentication with Rate Limiting ============
+// POST visit from frontend (ADDED)
+app.post("/api/visit", async (req, res) => {
+  try {
+    const { path } = req.body;
+    const visit = new Visit({
+      ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
+      path: path || req.headers.referer || '/',
+      userAgent: req.headers['user-agent']
+    });
+    await visit.save();
+    
+    // Keep only last 500 visits
+    const count = await Visit.countDocuments();
+    if (count > 500) {
+      const oldest = await Visit.findOne().sort({ timestamp: 1 });
+      if (oldest) await oldest.deleteOne();
+    }
+    
+    res.status(201).json({ success: true });
+  } catch (error) {
+    console.error('❌ Error saving visit:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ============ Authentication ============
 
 app.post("/api/check-password", loginLimiter, (req, res) => {
   const { password } = req.body;
   const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
-  
   if (password === adminPassword) {
     res.json({ success: true });
   } else {
@@ -416,11 +336,12 @@ app.use((err, req, res, next) => {
 });
 
 // ============ Start Server ============
+
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📊 API base URL: /api`);
   console.log(`🔐 Admin: /admin.html`);
-  console.log(`📈 Visitors tracking: enabled`);
+  console.log(`📈 Visitors tracking: enabled (POST /api/visit)`);
   console.log(`🌍 CORS enabled for: ${corsOptions.origin.join(', ')}`);
   console.log(`🔒 Login rate limit: 5 attempts per 15 minutes`);
 });
