@@ -53,120 +53,6 @@
             letter-spacing: -0.02em;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        section {
-            padding: 5rem 0;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-subtitle {
-            display: inline-block;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--secondary-gold);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        h2 {
-            font-size: 3.2rem;
-            color: var(--primary-deep-blue);
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            line-height: 1.2;
-        }
-
-        .section-divider {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            margin-top: 1rem;
-        }
-
-        .divider-line {
-            width: 50px;
-            height: 2px;
-            background: var(--secondary-gold);
-        }
-
-        .divider-icon {
-            color: var(--secondary-gold);
-            font-size: 0.8rem;
-        }
-
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--cream-soft);
-            color: var(--primary-deep-blue);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 500;
-            border: 1px solid var(--border-subtle);
-            transition: var(--transition-smooth);
-            margin-bottom: 2rem;
-        }
-
-        .back-button:hover {
-            background: var(--secondary-gold);
-            color: white;
-            transform: translateX(-5px);
-        }
-
-        header {
-            background: var(--gradient-dark);
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        .header-content {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .academic-badge {
-            display: inline-block;
-            background: rgba(201, 169, 97, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(201, 169, 97, 0.3);
-            padding: 0.5rem 1.8rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 500;
-            margin-bottom: 2rem;
-            color: var(--gold-light);
-        }
-
-        header h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .academic-title {
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 1px;
-            color: var(--gold-light);
-            display: inline-block;
-        }
-
         .admin-container {
             max-width: 1400px;
             margin: 2rem auto;
@@ -659,12 +545,55 @@
             color: #0a0;
         }
 
+        /* Visitor Table Styles */
+        .visitors-table {
+            background: white;
+            border-radius: var(--border-radius-card);
+            overflow: hidden;
+            box-shadow: var(--shadow-elegant);
+            margin-top: 2rem;
+        }
+
+        .visitors-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .visitors-table th {
+            background: var(--primary-deep-blue);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .visitors-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border-subtle);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .visitors-table tr:hover {
+            background: var(--cream-soft);
+        }
+
+        .total-visits-card {
+            background: linear-gradient(135deg, var(--primary-burgundy), var(--primary-deep-blue));
+            color: white;
+        }
+
+        .total-visits-card h3 {
+            color: white;
+        }
+
+        .total-visits-card i {
+            color: var(--secondary-gold);
+        }
+
         @media (max-width: 768px) {
-            .container {
-                padding: 0 1.5rem;
-            }
-            h2 {
-                font-size: 2.2rem;
+            .admin-container {
+                padding: 0 1rem;
             }
             .admin-tabs {
                 flex-direction: column;
@@ -678,31 +607,11 @@
             .season-selector button {
                 width: 100%;
             }
-            .admin-container {
-                padding: 0 1rem;
+            .visitors-table {
+                overflow-x: auto;
             }
-            .modal-content {
-                margin: 1rem;
-                padding: 1.5rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .container {
-                padding: 0 1rem;
-            }
-            h2 {
-                font-size: 2rem;
-            }
-            .stat-card {
-                padding: 1.5rem;
-            }
-            .season-card {
-                margin: 0 0.5rem;
-            }
-            .action-buttons {
-                flex-direction: column;
-                align-items: center;
+            .visitors-table table {
+                min-width: 500px;
             }
         }
     </style>
@@ -728,12 +637,12 @@
 
             <div class="admin-header">
                 <h1>Admin Dashboard</h1>
-                <p>Manage your video library and seasons</p>
+                <p>Manage your video library, seasons, and track visitors</p>
             </div>
 
             <!-- Tabs -->
             <div class="admin-tabs">
-                <button class="tab-btn active" onclick="switchTab('videos')" id="tabVideosBtn">
+                <button class="tab-btn" onclick="switchTab('videos')" id="tabVideosBtn">
                     <i class="fas fa-video"></i> Videos
                 </button>
                 <button class="tab-btn" onclick="switchTab('seasons')" id="tabSeasonsBtn">
@@ -742,10 +651,13 @@
                 <button class="tab-btn" onclick="switchTab('stats')" id="tabStatsBtn">
                     <i class="fas fa-chart-bar"></i> Statistics
                 </button>
+                <button class="tab-btn" onclick="switchTab('visitors')" id="tabVisitorsBtn">
+                    <i class="fas fa-users"></i> Visitors
+                </button>
             </div>
 
             <!-- Tab: Videos -->
-            <div id="tabVideos" class="tab-content active">
+            <div id="tabVideos" class="tab-content">
                 <div class="season-selector">
                     <select id="seasonSelect" onchange="loadVideos()">
                         <option value="1">Season 1</option>
@@ -806,6 +718,37 @@
                         <i class="fas fa-spinner fa-spin"></i>
                         <h3>Loading...</h3>
                     </div>
+                </div>
+            </div>
+
+            <!-- Tab: Visitors Analytics -->
+            <div id="tabVisitors" class="tab-content">
+                <div class="stats-grid" style="margin-bottom: 2rem;">
+                    <div class="stat-card total-visits-card" id="totalVisitsCard">
+                        <i class="fas fa-chart-line"></i>
+                        <h3 id="totalVisitsCount">0</h3>
+                        <p>Total Visits</p>
+                    </div>
+                </div>
+
+                <div class="visitors-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>IP Address</th>
+                                <th>Page Visited</th>
+                                <th>Date & Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="visitorsTableBody">
+                            <tr>
+                                <td colspan="3" class="loading-spinner">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p>Loading visitors data...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -888,7 +831,6 @@
         });
 
         // ============ Configuration ============
-        // تحديد رابط API بناءً على بيئة التشغيل
         const API_URL = window.location.hostname === 'localhost' ? '' : window.location.origin;
 
         console.log('🔧 Admin Dashboard initialized');
@@ -902,30 +844,30 @@
 
         // ============ Tab Switching ============
         function switchTab(tabName) {
-            // Hide all tabs
             document.getElementById('tabVideos').classList.remove('active');
             document.getElementById('tabSeasons').classList.remove('active');
             document.getElementById('tabStats').classList.remove('active');
+            document.getElementById('tabVisitors').classList.remove('active');
             
-            // Remove active from buttons
             document.getElementById('tabVideosBtn').classList.remove('active');
             document.getElementById('tabSeasonsBtn').classList.remove('active');
             document.getElementById('tabStatsBtn').classList.remove('active');
+            document.getElementById('tabVisitorsBtn').classList.remove('active');
             
-            // Show selected tab
             const tabId = `tab${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`;
             const btnId = `tab${tabName.charAt(0).toUpperCase() + tabName.slice(1)}Btn`;
             
             document.getElementById(tabId).classList.add('active');
             document.getElementById(btnId).classList.add('active');
             
-            // Load data based on tab
             if (tabName === 'seasons') {
                 loadSeasons();
             } else if (tabName === 'stats') {
                 loadStats();
             } else if (tabName === 'videos') {
                 loadVideos();
+            } else if (tabName === 'visitors') {
+                loadVisitors();
             }
         }
 
@@ -941,27 +883,19 @@
             try {
                 const response = await fetch(`${API_URL}/api/check-password`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ password }),
                 });
 
-                if (!response.ok) {
-                    throw new Error('Authentication failed');
-                }
-
+                if (!response.ok) throw new Error('Authentication failed');
                 const data = await response.json();
                 
                 if (data.success) {
                     document.getElementById('loginContainer').style.display = 'none';
                     document.getElementById('adminContent').style.display = 'block';
-                    
-                    // Load initial data
                     loadStats();
                     loadVideos();
                     loadSeasons();
-                    
                     console.log('✅ Login successful');
                 } else {
                     alert('Wrong password!');
@@ -975,25 +909,15 @@
         // ============ Video Management ============
         async function loadVideos() {
             currentSeason = document.getElementById('seasonSelect').value;
-
             try {
                 const response = await fetch(`${API_URL}/api/seasons/${currentSeason}/videos`);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 allVideos = await response.json();
                 displayVideos(allVideos);
             } catch (error) {
                 console.error('❌ Error loading videos:', error);
                 document.getElementById('videosTableBody').innerHTML = `
-                    <tr>
-                        <td colspan="5" class="error-message">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            Error loading videos: ${error.message}
-                        </td>
-                    </tr>
+                    <tr><td colspan="5" class="error-message"><i class="fas fa-exclamation-triangle"></i> Error loading videos: ${error.message}</td></tr>
                 `;
             }
         }
@@ -1001,17 +925,8 @@
         function displayVideos(videos) {
             const tbody = document.getElementById('videosTableBody');
             tbody.innerHTML = '';
-
             if (videos.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="5" class="empty-state">
-                            <i class="fas fa-video-slash"></i>
-                            <h3>No Videos</h3>
-                            <p>No videos in this season. Click "Add New Video" to create one.</p>
-                        </td>
-                    </tr>
-                `;
+                tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-video-slash"></i><h3>No Videos</h3><p>No videos in this season. Click "Add New Video" to create one.</p></td></tr>`;
             } else {
                 videos.forEach((video) => {
                     const row = document.createElement('tr');
@@ -1021,12 +936,8 @@
                         <td>${video.youtubeId || '—'}</td>
                         <td>${video.duration || '00:00'}</td>
                         <td class="action-buttons">
-                            <button class="btn-edit" onclick='editVideo("${video._id}", "${video.title}", "${video.youtubeId}", "${video.duration}", ${video.number})'>
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn-delete" onclick='deleteVideo("${video._id}")'>
-                                <i class="fas fa-trash"></i>
-                            </button>
+                            <button class="btn-edit" onclick='editVideo("${video._id}", "${video.title}", "${video.youtubeId}", "${video.duration}", ${video.number})'><i class="fas fa-edit"></i></button>
+                            <button class="btn-delete" onclick='deleteVideo("${video._id}")'><i class="fas fa-trash"></i></button>
                         </td>
                     `;
                     tbody.appendChild(row);
@@ -1065,7 +976,6 @@
 
         async function saveVideo(event) {
             event.preventDefault();
-
             const videoData = {
                 seasonId: parseInt(currentSeason),
                 number: parseInt(document.getElementById('videoNumber').value),
@@ -1073,32 +983,14 @@
                 youtubeId: document.getElementById('videoYoutubeId').value,
                 duration: document.getElementById('videoDuration').value,
             };
-
             try {
-                let response;
-                let url = editingVideoId 
-                    ? `${API_URL}/api/videos/${editingVideoId}`
-                    : `${API_URL}/api/videos`;
-
+                let response, url = editingVideoId ? `${API_URL}/api/videos/${editingVideoId}` : `${API_URL}/api/videos`;
                 const method = editingVideoId ? 'PUT' : 'POST';
-
-                response = await fetch(url, {
-                    method: method,
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(videoData),
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error || 'Failed to save video');
-                }
-
+                response = await fetch(url, { method: method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(videoData) });
+                if (!response.ok) { const error = await response.json(); throw new Error(error.error || 'Failed to save video'); }
                 closeModal('videoModal');
                 await loadVideos();
                 await loadStats();
-                
                 alert(editingVideoId ? '✅ Video updated successfully!' : '✅ Video added successfully!');
             } catch (error) {
                 console.error('❌ Error saving video:', error);
@@ -1107,23 +999,12 @@
         }
 
         async function deleteVideo(id) {
-            if (!confirm('Are you sure you want to delete this video?')) {
-                return;
-            }
-
+            if (!confirm('Are you sure you want to delete this video?')) return;
             try {
-                const response = await fetch(`${API_URL}/api/videos/${id}`, {
-                    method: 'DELETE',
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error || 'Failed to delete video');
-                }
-
+                const response = await fetch(`${API_URL}/api/videos/${id}`, { method: 'DELETE' });
+                if (!response.ok) { const error = await response.json(); throw new Error(error.error || 'Failed to delete video'); }
                 await loadVideos();
                 await loadStats();
-                
                 alert('✅ Video deleted successfully!');
             } catch (error) {
                 console.error('❌ Error deleting video:', error);
@@ -1135,15 +1016,9 @@
         async function loadSeasons() {
             try {
                 const response = await fetch(`${API_URL}/api/seasons`);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const seasons = await response.json();
                 displaySeasons(seasons);
-
-                // Update season select dropdown
                 const select = document.getElementById('seasonSelect');
                 select.innerHTML = '';
                 seasons.forEach(season => {
@@ -1154,59 +1029,27 @@
                 });
             } catch (error) {
                 console.error('❌ Error loading seasons:', error);
-                document.getElementById('seasonsContainer').innerHTML = `
-                    <div class="error-message" style="grid-column: 1/-1;">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Error Loading Seasons</h3>
-                        <p>${error.message}</p>
-                    </div>
-                `;
+                document.getElementById('seasonsContainer').innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i><h3>Error Loading Seasons</h3><p>${error.message}</p></div>`;
             }
         }
 
         function displaySeasons(seasons) {
             const container = document.getElementById('seasonsContainer');
             container.innerHTML = '';
-
             if (seasons.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state" style="grid-column: 1/-1;">
-                        <i class="fas fa-layer-group"></i>
-                        <h3>No Seasons</h3>
-                        <p>Click "Add New Season" to create your first season.</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="empty-state"><i class="fas fa-layer-group"></i><h3>No Seasons</h3><p>Click "Add New Season" to create your first season.</p></div>`;
                 return;
             }
-
             seasons.forEach((season) => {
                 const card = document.createElement('div');
                 card.className = 'season-card';
-                
                 const isDefault = season.seasonId <= 3;
-
                 card.innerHTML = `
-                    <div class="season-header">
-                        <h3>${season.title || 'Untitled'}</h3>
-                        <div class="season-id">ID: ${season.seasonId}</div>
-                    </div>
-                    <div class="season-body">
-                        <p><strong>Subtitle:</strong> ${season.subtitle || '—'}</p>
-                        <p><strong>Badge:</strong> <span class="badge">${season.badge || '—'}</span></p>
-                    </div>
+                    <div class="season-header"><h3>${season.title || 'Untitled'}</h3><div class="season-id">ID: ${season.seasonId}</div></div>
+                    <div class="season-body"><p><strong>Subtitle:</strong> ${season.subtitle || '—'}</p><p><strong>Badge:</strong> <span class="badge">${season.badge || '—'}</span></p></div>
                     <div class="season-actions">
-                        <button class="btn-warning" onclick='editSeason(${season.seasonId}, "${season.title}", "${season.subtitle}", "${season.badge}")' style="flex:1;">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                        ${!isDefault ? `
-                            <button class="btn-danger" onclick='deleteSeason(${season.seasonId})' style="flex:1;">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        ` : `
-                            <button class="btn-secondary" disabled style="flex:1; opacity:0.5;">
-                                <i class="fas fa-lock"></i> Default
-                            </button>
-                        `}
+                        <button class="btn-warning" onclick='editSeason(${season.seasonId}, "${season.title}", "${season.subtitle}", "${season.badge}")' style="flex:1;"><i class="fas fa-edit"></i> Edit</button>
+                        ${!isDefault ? `<button class="btn-danger" onclick='deleteSeason(${season.seasonId})' style="flex:1;"><i class="fas fa-trash"></i> Delete</button>` : `<button class="btn-secondary" disabled style="flex:1; opacity:0.5;"><i class="fas fa-lock"></i> Default</button>`}
                     </div>
                 `;
                 container.appendChild(card);
@@ -1233,38 +1076,19 @@
 
         async function saveSeason(event) {
             event.preventDefault();
-
             const seasonData = {
                 title: document.getElementById('seasonTitle').value,
                 subtitle: document.getElementById('seasonSubtitle').value,
                 badge: document.getElementById('seasonBadge').value,
             };
-
             try {
-                let response;
-                let url = editingSeasonId 
-                    ? `${API_URL}/api/seasons/${editingSeasonId}`
-                    : `${API_URL}/api/seasons`;
-
+                let response, url = editingSeasonId ? `${API_URL}/api/seasons/${editingSeasonId}` : `${API_URL}/api/seasons`;
                 const method = editingSeasonId ? 'PUT' : 'POST';
-
-                response = await fetch(url, {
-                    method: method,
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(seasonData),
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error || 'Failed to save season');
-                }
-
+                response = await fetch(url, { method: method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(seasonData) });
+                if (!response.ok) { const error = await response.json(); throw new Error(error.error || 'Failed to save season'); }
                 closeModal('seasonModal');
                 await loadSeasons();
                 await loadStats();
-                
                 alert(editingSeasonId ? '✅ Season updated successfully!' : '✅ Season added successfully!');
             } catch (error) {
                 console.error('❌ Error saving season:', error);
@@ -1273,28 +1097,13 @@
         }
 
         async function deleteSeason(seasonId) {
-            if (seasonId <= 3) {
-                alert('Cannot delete default seasons (1, 2, 3)');
-                return;
-            }
-
-            if (!confirm('⚠️ Are you sure you want to delete this season? All videos in this season must be deleted first.')) {
-                return;
-            }
-
+            if (seasonId <= 3) { alert('Cannot delete default seasons (1, 2, 3)'); return; }
+            if (!confirm('⚠️ Are you sure you want to delete this season? All videos in this season must be deleted first.')) return;
             try {
-                const response = await fetch(`${API_URL}/api/seasons/${seasonId}`, {
-                    method: 'DELETE',
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error || 'Failed to delete season');
-                }
-
+                const response = await fetch(`${API_URL}/api/seasons/${seasonId}`, { method: 'DELETE' });
+                if (!response.ok) { const error = await response.json(); throw new Error(error.error || 'Failed to delete season'); }
                 await loadSeasons();
                 await loadStats();
-                
                 alert('✅ Season deleted successfully!');
             } catch (error) {
                 console.error('❌ Error deleting season:', error);
@@ -1306,41 +1115,57 @@
         async function loadStats() {
             try {
                 const response = await fetch(`${API_URL}/api/stats`);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const stats = await response.json();
-
                 const statsHtml = `
-                    <div class="stat-card">
-                        <i class="fas fa-video"></i>
-                        <h3>${stats.totalVideos || 0}</h3>
-                        <p>Total Videos</p>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-layer-group"></i>
-                        <h3>${stats.totalSeasons || 0}</h3>
-                        <p>Seasons</p>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-clock"></i>
-                        <h3>${stats.totalHours || '0h'}</h3>
-                        <p>Total Hours</p>
-                    </div>
+                    <div class="stat-card"><i class="fas fa-video"></i><h3>${stats.totalVideos || 0}</h3><p>Total Videos</p></div>
+                    <div class="stat-card"><i class="fas fa-layer-group"></i><h3>${stats.totalSeasons || 0}</h3><p>Seasons</p></div>
+                    <div class="stat-card"><i class="fas fa-clock"></i><h3>${stats.totalHours || '0h'}</h3><p>Total Hours</p></div>
                 `;
-
                 document.getElementById('statsContainer').innerHTML = statsHtml;
             } catch (error) {
                 console.error('❌ Error loading stats:', error);
-                document.getElementById('statsContainer').innerHTML = `
-                    <div class="error-message" style="grid-column: 1/-1;">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Error Loading Statistics</h3>
-                        <p>${error.message}</p>
-                    </div>
-                `;
+                document.getElementById('statsContainer').innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i><h3>Error Loading Statistics</h3><p>${error.message}</p></div>`;
+            }
+        }
+
+        // ============ Visitors Analytics ============
+        async function loadVisitors() {
+            const tbody = document.getElementById('visitorsTableBody');
+            const totalVisitsSpan = document.getElementById('totalVisitsCount');
+            
+            tbody.innerHTML = `<tr><td colspan="3" class="loading-spinner"><i class="fas fa-spinner fa-spin"></i><p>Loading visitors data...</p></td></tr>`;
+            
+            try {
+                const response = await fetch(`${API_URL}/api/stats/visits`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const data = await response.json();
+                
+                totalVisitsSpan.textContent = data.totalVisits || 0;
+                
+                if (!data.lastVisits || data.lastVisits.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="3" class="empty-state"><i class="fas fa-chart-line"></i><h3>No Visits Yet</h3><p>Start sharing your website to see visitor statistics.</p></td></tr>`;
+                    return;
+                }
+                
+                tbody.innerHTML = '';
+                data.lastVisits.forEach(visit => {
+                    const row = document.createElement('tr');
+                    const date = new Date(visit.timestamp);
+                    const formattedDate = date.toLocaleString('en-US', {
+                        year: 'numeric', month: 'short', day: 'numeric',
+                        hour: '2-digit', minute: '2-digit', second: '2-digit'
+                    });
+                    row.innerHTML = `
+                        <td>${visit.ip || 'Unknown'}</td>
+                        <td>${visit.path || '/'}</td>
+                        <td>${formattedDate}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('❌ Error loading visitors:', error);
+                tbody.innerHTML = `<tr><td colspan="3" class="error-message"><i class="fas fa-exclamation-triangle"></i> Error loading visitors: ${error.message}</td></tr>`;
             }
         }
 
@@ -1349,20 +1174,11 @@
             document.getElementById(modalId).style.display = 'none';
         }
 
-        // Close modals when clicking outside
         window.onclick = function(event) {
-            const videoModal = document.getElementById('videoModal');
-            const seasonModal = document.getElementById('seasonModal');
-            
-            if (event.target === videoModal) {
-                closeModal('videoModal');
-            }
-            if (event.target === seasonModal) {
-                closeModal('seasonModal');
-            }
+            if (event.target === document.getElementById('videoModal')) closeModal('videoModal');
+            if (event.target === document.getElementById('seasonModal')) closeModal('seasonModal');
         };
 
-        // Close modals with Escape key
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeModal('videoModal');
