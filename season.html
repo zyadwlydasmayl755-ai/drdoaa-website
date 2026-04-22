@@ -621,7 +621,7 @@
       });
 
       // ============ Configuration ============
-      const API_URL = window.location.hostname === 'localhost' ? '' : window.location.origin; // استبدل برابط Render بعد الرفع
+      const API_URL = window.location.hostname === 'localhost' ? '' : window.location.origin;
 
       const params = new URLSearchParams(window.location.search);
       const season = params.get("season") || "1";
@@ -785,11 +785,15 @@
         }
       };
 
+      // ============ Track Page Visit (NEW) ============
+      fetch('/api/visit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path: window.location.pathname })
+      }).catch(err => console.error('Visit tracking failed:', err));
+
       // تحميل الموسم عند تحميل الصفحة
       loadSeason();
     </script>
   </body>
 </html>
-
-
-
