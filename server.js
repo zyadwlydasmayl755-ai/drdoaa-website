@@ -46,6 +46,39 @@ app.use((req, res, next) => {
   next();
 });
 
+// ============ Visitor Tracking Middleware (NEW) ============
+// This middleware saves every page visit to the database
+app.use(async (req, res, next) => {
+  // Skip tracking for static assets (images, css, js, etc.)
+  if (req.path.includes('.') && !req.path.includes('.html')) {
+    return next();
+  }
+  
+  // Skip tracking for API calls
+  if (req.path.startsWith('/api/')) {
+    return next();
+  }
+  
+  try {
+    const visit = new Visit({
+      ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
+      path: req.path,
+      userAgent: req.headers['user-agent']
+    });
+    await visit.save();
+    
+    // Keep only last 500 visits to prevent database bloat
+    const count = await Visit.countDocuments();
+    if (count > 500) {
+      const oldest = await Visit.findOne().sort({ timestamp: 1 });
+      if (oldest) await oldest.deleteOne();
+    }
+  } catch (err) {
+    console.error("❌ Failed to save visit:", err);
+  }
+  next();
+});
+
 // ============ Routes ============
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
@@ -89,8 +122,17 @@ const seasonSchema = new mongoose.Schema({
   timestamps: true 
 });
 
+// ============ Visitor Analytics Schema (NEW) ============
+const visitSchema = new mongoose.Schema({
+  ip: { type: String },
+  path: { type: String, required: true },
+  userAgent: { type: String },
+  timestamp: { type: Date, default: Date.now }
+}, { timestamps: true });
+
 const Video = mongoose.model("Video", videoSchema);
 const Season = mongoose.model("Season", seasonSchema);
+const Visit = mongoose.model("Visit", visitSchema);
 
 // ============ API Routes - Seasons ============
 
@@ -127,12 +169,10 @@ app.post("/api/seasons", async (req, res) => {
   try {
     const { title, subtitle, badge } = req.body;
     
-    // Validate required fields
     if (!title) {
       return res.status(400).json({ error: "Season title is required" });
     }
     
-    // Get the highest seasonId
     const lastSeason = await Season.findOne().sort({ seasonId: -1 });
     const newSeasonId = lastSeason ? lastSeason.seasonId + 1 : 4;
     
@@ -162,7 +202,6 @@ app.put("/api/seasons/:seasonId", async (req, res) => {
       return res.status(404).json({ error: "Season not found" });
     }
     
-    // Update fields
     if (req.body.title) season.title = req.body.title;
     if (req.body.subtitle !== undefined) season.subtitle = req.body.subtitle;
     if (req.body.badge !== undefined) season.badge = req.body.badge;
@@ -181,12 +220,10 @@ app.delete("/api/seasons/:seasonId", async (req, res) => {
   try {
     const seasonId = parseInt(req.params.seasonId);
     
-    // Prevent deletion of default seasons (1,2,3)
     if (seasonId <= 3) {
       return res.status(403).json({ error: "Cannot delete default seasons (1, 2, 3)" });
     }
     
-    // Check if season has videos
     const videosCount = await Video.countDocuments({ seasonId });
     if (videosCount > 0) {
       return res.status(400).json({ 
@@ -226,12 +263,10 @@ app.post("/api/videos", async (req, res) => {
   try {
     const { seasonId, number, title, youtubeId, duration, description } = req.body;
     
-    // Validate required fields
     if (!seasonId || !number || !title || !youtubeId || !duration) {
       return res.status(400).json({ error: "Missing required fields" });
     }
     
-    // Check if video number already exists in this season
     const existingVideo = await Video.findOne({ seasonId, number });
     if (existingVideo) {
       return res.status(400).json({ 
@@ -266,7 +301,6 @@ app.put("/api/videos/:id", async (req, res) => {
       return res.status(404).json({ error: "Video not found" });
     }
     
-    // Update fields
     if (req.body.number) video.number = req.body.number;
     if (req.body.title) video.title = req.body.title;
     if (req.body.youtubeId) video.youtubeId = req.body.youtubeId;
@@ -332,9 +366,20 @@ app.get("/api/stats", async (req, res) => {
   }
 });
 
+// ============ GET Visitors Statistics (NEW) ============
+app.get("/api/stats/visits", async (req, res) => {
+  try {
+    const totalVisits = await Visit.countDocuments();
+    const lastVisits = await Visit.find().sort({ timestamp: -1 }).limit(20);
+    res.json({ totalVisits, lastVisits });
+  } catch (error) {
+    console.error('❌ Error fetching visitors:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // ============ Authentication with Rate Limiting ============
 
-// POST check password - Protected by rate limiter
 app.post("/api/check-password", loginLimiter, (req, res) => {
   const { password } = req.body;
   const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
@@ -348,7 +393,6 @@ app.post("/api/check-password", loginLimiter, (req, res) => {
 
 // ============ Health Check ============
 
-// Health check
 app.get("/health", (req, res) => {
   res.status(200).json({ 
     status: "OK", 
@@ -360,14 +404,12 @@ app.get("/health", (req, res) => {
 
 // ============ 404 Handler ============
 
-// 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
 
 // ============ Error Handler ============
 
-// Error handler
 app.use((err, req, res, next) => {
   console.error('❌ Unhandled error:', err);
   res.status(500).json({ error: "Internal server error" });
@@ -378,6 +420,7 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📊 API base URL: /api`);
   console.log(`🔐 Admin: /admin.html`);
+  console.log(`📈 Visitors tracking: enabled`);
   console.log(`🌍 CORS enabled for: ${corsOptions.origin.join(', ')}`);
   console.log(`🔒 Login rate limit: 5 attempts per 15 minutes`);
 });
